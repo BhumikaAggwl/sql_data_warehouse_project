@@ -22,8 +22,7 @@ CREATE TABLE bronze.crm_cust_info(
 	cst_lastname NVARCHAR(50),
 	cst_material_status NVARCHAR(50),
 	cst_gndr NVARCHAR(50),
-	cst_create_date DATE,
-	dwh_create_date DATETIME2 DEFAULT GETDATE()
+	cst_create_date DATE
 );
 GO
 
@@ -53,12 +52,12 @@ CREATE TABLE bronze.crm_sales_details(
 	sls_due_dt INT,
 	sls_sales INT,
 	sls_qauntity INT ,
-	sls_price INT,
+	sls_price INT
 );
 GO
 
-IF OBJECT_ID('bronze.erp_loc_a101', 'U') IS NOT NULL
-    DROP TABLE bronze.erp_loc_a101;
+IF OBJECT_ID('bronze.erp_cust_az12', 'U') IS NOT NULL
+    DROP TABLE bronze.erp_cust_az12;
 GO
 
 CREATE TABLE bronze.erp_cust_az12(
@@ -68,8 +67,8 @@ CREATE TABLE bronze.erp_cust_az12(
 );
 GO
 
-IF OBJECT_ID('bronze.erp_cust_az12', 'U') IS NOT NULL
-    DROP TABLE bronze.erp_cust_az12;
+IF OBJECT_ID('bronze.erp_loc_a101', 'U') IS NOT NULL
+    DROP TABLE bronze.erp_loc_a101;
 GO
 
 

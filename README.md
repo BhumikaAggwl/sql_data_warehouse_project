@@ -1,262 +1,465 @@
-# 🏗️ SQL Data Warehouse Project
+# 🏗️ SQL Data Warehouse & Analytics Project
 
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
 ![T-SQL](https://img.shields.io/badge/T--SQL-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
+![ETL](https://img.shields.io/badge/ETL-Pipeline-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-A modern, end-to-end **SQL Server Data Warehouse** built with dimensional modeling, ETL pipelines, and data quality checks — designed for BI reporting and analytics.
+A complete **SQL Server Data Warehouse** project built using the **Medallion Architecture (Bronze → Silver → Gold)**. The project demonstrates end-to-end data engineering concepts including ETL pipelines, data cleansing, dimensional modeling, and analytical reporting.
 
 ---
 
-## 🏛️ Architecture
+# 📖 Project Overview
 
-```
-Raw Data Sources ➡️ Staging (Extract) ➡️ Transform & Clean ➡️ Data Warehouse (Load) ➡️ BI / Analytics
-```
+This project showcases the complete lifecycle of building a modern data warehouse from raw operational data to analytics-ready tables.
 
-The warehouse follows a **Star Schema** with the following tables:
+### Key Features
 
-| Type | Table | Description |
-|---|---|---|
-| Fact | `fact_sales` | Transactional metrics, quantities, and foreign keys |
-| Dimension | `dim_customers` | Customer demographics and profile data |
-| Dimension | `dim_products` | Product categories, descriptions, and pricing |
-| Dimension | `dim_date` | Year, Quarter, Month, Weekday attributes |
+- Extract data from CRM and ERP source systems
+- Build ETL pipelines using T-SQL
+- Clean, standardize and validate data
+- Implement Bronze, Silver and Gold layers
+- Design a Star Schema for analytics
+- Perform data quality and integrity checks
+- Enable fast SQL-based reporting and BI
 
 ---
 
-## 🗂️ Repository Structure
+# 🏗️ Data Architecture
+
+The project follows the **Medallion Architecture**, consisting of three logical layers.
+
+![Data Architecture](docs/data_architecture.png)
+
+### 🥉 Bronze Layer
+- Raw data ingestion
+- Loads CRM and ERP CSV files into SQL Server
+- No transformations applied
+
+### 🥈 Silver Layer
+- Data cleansing
+- Standardization
+- Deduplication
+- Null handling
+- Business rule validation
+
+### 🥇 Gold Layer
+- Business-ready analytical model
+- Star schema implementation
+- Fact and dimension tables optimized for reporting
+
+---
+
+# ⭐ Data Model
+
+The Gold layer follows a **Star Schema**.
+
+| Table | Type | Description |
+|--------|------|-------------|
+| `fact_sales` | Fact | Sales transactions and business metrics |
+| `dim_customers` | Dimension | Customer information |
+| `dim_products` | Dimension | Product details and hierarchy |
+| `dim_date` | Dimension | Calendar attributes for time analysis |
+
+---
+
+# 🚀 ETL Workflow
+
+```
+CSV Files
+     │
+     ▼
+Bronze Layer
+(Raw Data)
+     │
+     ▼
+Silver Layer
+(Clean & Transform)
+     │
+     ▼
+Gold Layer
+(Star Schema)
+     │
+     ▼
+Analytics & Reporting
+```
+
+---
+
+# 📂 Repository Structure
 
 ```
 sql_data_warehouse_project/
-├── datasets/                     # Raw source data files (CSV / text dumps)
-├── docs/                         # Architecture diagrams and data dictionary
+│
+├── datasets/
+│   ├── crm/
+│   └── erp/
+│
+├── docs/
+│   ├── data_architecture.png
+│   ├── data_models.drawio
+│   ├── data_flow.drawio
+│   └── data_catalog.md
+│
 ├── scripts/
-│   └── ddl_gold.sql              # T-SQL DDL: Gold layer analytical tables
+│   ├── bronze/
+│   ├── silver/
+│   └── gold/
+│
 ├── tests/
-│   └── quality_checks_gold.sql   # Data quality & integrity validation scripts
+│   └── quality_checks_gold.sql
+│
+├── README.md
 ├── LICENSE
-└── README.md
+└── .gitignore
 ```
 
 ---
 
-## 🚀 Getting Started
+# 🛠️ Technologies Used
 
-### Prerequisites
+| Category | Technology |
+|-----------|------------|
+| Database | Microsoft SQL Server |
+| Language | T-SQL |
+| Architecture | Medallion Architecture |
+| Modeling | Star Schema |
+| ETL | SQL Stored Procedures |
+| Data Sources | CRM & ERP CSV Files |
 
-- **Database:** [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server)
-- **Client:** [SSMS](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms), [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio), or [DBeaver](https://dbeaver.io/)
+---
 
-### Setup
+# 📊 Data Pipeline
+
+The ETL pipeline performs the following operations:
+
+### Bronze
+
+- Import raw CSV files
+- Preserve source data
+- Maintain original structure
+
+### Silver
+
+- Remove duplicates
+- Handle missing values
+- Standardize formats
+- Clean inconsistent records
+- Validate business rules
+
+### Gold
+
+- Create dimensions
+- Create fact tables
+- Build relationships
+- Optimize analytical queries
+
+---
+
+# ✅ Data Quality Checks
+
+The project includes automated validation scripts to ensure data reliability.
+
+Checks include:
+
+- Duplicate detection
+- Null value validation
+- Primary key uniqueness
+- Foreign key integrity
+- Data consistency
+- Business rule validation
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+- Microsoft SQL Server
+- SQL Server Management Studio (SSMS)
+
+## Setup
+
+Clone the repository
 
 ```bash
 git clone https://github.com/BhumikaAggwl/sql_data_warehouse_project.git
+
 cd sql_data_warehouse_project
 ```
 
-Then in your SQL client:
+Run the SQL scripts in the following order:
 
-```sql
--- 1. Create Gold layer tables
--- Run: scripts/ddl_gold.sql
-
--- 2. Validate data integrity
--- Run: tests/quality_checks_gold.sql
+```
+1. Bronze Layer
+2. Silver Layer
+3. Gold Layer
+4. Data Quality Tests
 ```
 
 ---
 
-## 🛠️ Tech Stack
+# 📈 Business Use Cases
 
-| Component | Technology |
-|---|---|
-| Database Engine | Microsoft SQL Server |
-| Language | T-SQL (Transact-SQL) |
-| Data Modeling | Star Schema / Dimensional Modeling |
+The warehouse supports analytics such as:
 
----
-
-## 📄 License
-
-[MIT License](LICENSE) — free to use, modify, and share with attribution.
+- Sales Performance
+- Customer Segmentation
+- Product Performance
+- Revenue Trends
+- Time-based Analysis
+- Business Intelligence Reporting
 
 ---
 
-## 🙋‍♀️ Author
+# 🎯 Skills Demonstrated
 
-**Bhumika Aggarwal** · [GitHub](https://github.com/BhumikaAggwl)# 🏗️ SQL Data Warehouse Project
+- SQL Development
+- ETL Pipeline Design
+- Data Warehousing
+- Data Modeling
+- Dimensional Modeling
+- Data Engineering
+- Data Cleaning
+- SQL Performance Optimization
+- Analytical SQL
+
+---
+
+# 🛡️ License
+
+This project is licensed under the **MIT License**.
+
+See the [LICENSE](LICENSE) file for details.# 🏗️ SQL Data Warehouse & Analytics Project
 
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
 ![T-SQL](https://img.shields.io/badge/T--SQL-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
+![ETL](https://img.shields.io/badge/ETL-Pipeline-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-A modern, end-to-end **SQL Server Data Warehouse** built with dimensional modeling, ETL pipelines, and data quality checks — designed for BI reporting and analytics.
+A complete **SQL Server Data Warehouse** project built using the **Medallion Architecture (Bronze → Silver → Gold)**. The project demonstrates end-to-end data engineering concepts including ETL pipelines, data cleansing, dimensional modeling, and analytical reporting.
 
 ---
 
-## 🏛️ Architecture
+# 📖 Project Overview
 
-```
-Raw Data Sources ➡️ Staging (Extract) ➡️ Transform & Clean ➡️ Data Warehouse (Load) ➡️ BI / Analytics
-```
+This project showcases the complete lifecycle of building a modern data warehouse from raw operational data to analytics-ready tables.
 
-The warehouse follows a **Star Schema** with the following tables:
+### Key Features
 
-| Type | Table | Description |
-|---|---|---|
-| Fact | `fact_sales` | Transactional metrics, quantities, and foreign keys |
-| Dimension | `dim_customers` | Customer demographics and profile data |
-| Dimension | `dim_products` | Product categories, descriptions, and pricing |
-| Dimension | `dim_date` | Year, Quarter, Month, Weekday attributes |
+- Extract data from CRM and ERP source systems
+- Build ETL pipelines using T-SQL
+- Clean, standardize and validate data
+- Implement Bronze, Silver and Gold layers
+- Design a Star Schema for analytics
+- Perform data quality and integrity checks
+- Enable fast SQL-based reporting and BI
 
 ---
 
-## 🗂️ Repository Structure
+# 🏗️ Data Architecture
+
+The project follows the **Medallion Architecture**, consisting of three logical layers.
+
+![Data Architecture](docs/data_architecture.png)
+
+### 🥉 Bronze Layer
+- Raw data ingestion
+- Loads CRM and ERP CSV files into SQL Server
+- No transformations applied
+
+### 🥈 Silver Layer
+- Data cleansing
+- Standardization
+- Deduplication
+- Null handling
+- Business rule validation
+
+### 🥇 Gold Layer
+- Business-ready analytical model
+- Star schema implementation
+- Fact and dimension tables optimized for reporting
+
+---
+
+# ⭐ Data Model
+
+The Gold layer follows a **Star Schema**.
+
+| Table | Type | Description |
+|--------|------|-------------|
+| `fact_sales` | Fact | Sales transactions and business metrics |
+| `dim_customers` | Dimension | Customer information |
+| `dim_products` | Dimension | Product details and hierarchy |
+| `dim_date` | Dimension | Calendar attributes for time analysis |
+
+---
+
+# 🚀 ETL Workflow
+
+```
+CSV Files
+     │
+     ▼
+Bronze Layer
+(Raw Data)
+     │
+     ▼
+Silver Layer
+(Clean & Transform)
+     │
+     ▼
+Gold Layer
+(Star Schema)
+     │
+     ▼
+Analytics & Reporting
+```
+
+---
+
+# 📂 Repository Structure
 
 ```
 sql_data_warehouse_project/
-├── datasets/                     # Raw source data files (CSV / text dumps)
-├── docs/                         # Architecture diagrams and data dictionary
+│
+├── datasets/
+│   ├── crm/
+│   └── erp/
+│
+├── docs/
+│   ├── data_architecture.png
+│   ├── data_models.drawio
+│   ├── data_flow.drawio
+│   └── data_catalog.md
+│
 ├── scripts/
-│   └── ddl_gold.sql              # T-SQL DDL: Gold layer analytical tables
+│   ├── bronze/
+│   ├── silver/
+│   └── gold/
+│
 ├── tests/
-│   └── quality_checks_gold.sql   # Data quality & integrity validation scripts
+│   └── quality_checks_gold.sql
+│
+├── README.md
 ├── LICENSE
-└── README.md
+└── .gitignore
 ```
 
 ---
 
-## 🚀 Getting Started
+# 🛠️ Technologies Used
 
-### Prerequisites
+| Category | Technology |
+|-----------|------------|
+| Database | Microsoft SQL Server |
+| Language | T-SQL |
+| Architecture | Medallion Architecture |
+| Modeling | Star Schema |
+| ETL | SQL Stored Procedures |
+| Data Sources | CRM & ERP CSV Files |
 
-- **Database:** [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server)
-- **Client:** [SSMS](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms), [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio), or [DBeaver](https://dbeaver.io/)
+---
 
-### Setup
+# 📊 Data Pipeline
+
+The ETL pipeline performs the following operations:
+
+### Bronze
+
+- Import raw CSV files
+- Preserve source data
+- Maintain original structure
+
+### Silver
+
+- Remove duplicates
+- Handle missing values
+- Standardize formats
+- Clean inconsistent records
+- Validate business rules
+
+### Gold
+
+- Create dimensions
+- Create fact tables
+- Build relationships
+- Optimize analytical queries
+
+---
+
+# ✅ Data Quality Checks
+
+The project includes automated validation scripts to ensure data reliability.
+
+Checks include:
+
+- Duplicate detection
+- Null value validation
+- Primary key uniqueness
+- Foreign key integrity
+- Data consistency
+- Business rule validation
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+- Microsoft SQL Server
+- SQL Server Management Studio (SSMS)
+
+## Setup
+
+Clone the repository
 
 ```bash
 git clone https://github.com/BhumikaAggwl/sql_data_warehouse_project.git
+
 cd sql_data_warehouse_project
 ```
 
-Then in your SQL client:
+Run the SQL scripts in the following order:
 
-```sql
--- 1. Create Gold layer tables
--- Run: scripts/ddl_gold.sql
-
--- 2. Validate data integrity
--- Run: tests/quality_checks_gold.sql
+```
+1. Bronze Layer
+2. Silver Layer
+3. Gold Layer
+4. Data Quality Tests
 ```
 
 ---
 
-## 🛠️ Tech Stack
+# 📈 Business Use Cases
 
-| Component | Technology |
-|---|---|
-| Database Engine | Microsoft SQL Server |
-| Language | T-SQL (Transact-SQL) |
-| Data Modeling | Star Schema / Dimensional Modeling |
+The warehouse supports analytics such as:
 
----
-
-## 📄 License
-
-[MIT License](LICENSE) — free to use, modify, and share with attribution.
+- Sales Performance
+- Customer Segmentation
+- Product Performance
+- Revenue Trends
+- Time-based Analysis
+- Business Intelligence Reporting
 
 ---
 
-## 🙋‍♀️ Author
+# 🎯 Skills Demonstrated
 
-**Bhumika Aggarwal** · [GitHub](https://github.com/BhumikaAggwl)# 🏗️ SQL Data Warehouse Project
-
-![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
-![T-SQL](https://img.shields.io/badge/T--SQL-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-
-A modern, end-to-end **SQL Server Data Warehouse** built with dimensional modeling, ETL pipelines, and data quality checks — designed for BI reporting and analytics.
-
----
-
-## 🏛️ Architecture
-
-```
-Raw Data Sources ➡️ Staging (Extract) ➡️ Transform & Clean ➡️ Data Warehouse (Load) ➡️ BI / Analytics
-```
-
-The warehouse follows a **Star Schema** with the following tables:
-
-| Type | Table | Description |
-|---|---|---|
-| Fact | `fact_sales` | Transactional metrics, quantities, and foreign keys |
-| Dimension | `dim_customers` | Customer demographics and profile data |
-| Dimension | `dim_products` | Product categories, descriptions, and pricing |
-| Dimension | `dim_date` | Year, Quarter, Month, Weekday attributes |
+- SQL Development
+- ETL Pipeline Design
+- Data Warehousing
+- Data Modeling
+- Dimensional Modeling
+- Data Engineering
+- Data Cleaning
+- SQL Performance Optimization
+- Analytical SQL
 
 ---
 
-## 🗂️ Repository Structure
+# 🛡️ License
 
-```
-sql_data_warehouse_project/
-├── datasets/                     # Raw source data files (CSV / text dumps)
-├── docs/                         # Architecture diagrams and data dictionary
-├── scripts/
-│   └── ddl_gold.sql              # T-SQL DDL: Gold layer analytical tables
-├── tests/
-│   └── quality_checks_gold.sql   # Data quality & integrity validation scripts
-├── LICENSE
-└── README.md
-```
+This project is licensed under the **MIT License**.
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Database:** [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server)
-- **Client:** [SSMS](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms), [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio), or [DBeaver](https://dbeaver.io/)
-
-### Setup
-
-```bash
-git clone https://github.com/BhumikaAggwl/sql_data_warehouse_project.git
-cd sql_data_warehouse_project
-```
-
-Then in your SQL client:
-
-```sql
--- 1. Create Gold layer tables
--- Run: scripts/ddl_gold.sql
-
--- 2. Validate data integrity
--- Run: tests/quality_checks_gold.sql
-```
-
----
-
-## 🛠️ Tech Stack
-
-| Component | Technology |
-|---|---|
-| Database Engine | Microsoft SQL Server |
-| Language | T-SQL (Transact-SQL) |
-| Data Modeling | Star Schema / Dimensional Modeling |
-
----
-
-## 📄 License
-
-[MIT License](LICENSE) — free to use, modify, and share with attribution.
-
----
-
-## 🙋‍♀️ Author
-
-**Bhumika Aggarwal** · [GitHub](https://github.com/BhumikaAggwl)
+See the [LICENSE](LICENSE) file for details.
